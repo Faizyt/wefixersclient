@@ -18,27 +18,39 @@ class WelcomePage extends GetView<WelcomeController> {
           return Column(
             children: [
               Container(
-                height: constraints.maxHeight / 2,
+                height: constraints.maxHeight / 3,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: ColorConst.primaryColor,
                 ),
                 alignment: Alignment.center,
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Welcome",
                       style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    FlutterLogo()
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: Colors.white,
+                      ),
+                      child: Image.asset(
+                        "assets/images/wefixerslogo.png",
+                        height: 100,
+                        width: 100,
+                      ),
+                    ),
                   ],
                 ),
               ),

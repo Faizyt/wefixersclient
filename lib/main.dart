@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wefixers/app/bindings/signup_binding.dart';
 import 'package:wefixers/app/data/provider/authprovider.dart';
 import 'package:wefixers/app/routes/pages.dart';
+import 'package:wefixers/app/ui/utils/colorconst.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,14 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      onInit: () => AuthProvider().isLoggedIn(),
-      getPages: Pages.pages,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      initialRoute: Pages.welcome,
-    );
+        onInit: () => AuthProvider().isLoggedIn(),
+        getPages: Pages.pages,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: ColorConst.primaryColor),
+          useMaterial3: true,
+        ),
+        initialRoute: Pages.welcome,
+      
+        );
   }
 }

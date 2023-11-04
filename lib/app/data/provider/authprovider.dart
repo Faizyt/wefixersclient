@@ -1,7 +1,9 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
+import 'package:wefixers/app/data/services/appwrite/appwriteglobal.dart';
 import 'package:wefixers/app/data/services/appwrite/connection.dart';
+import 'package:wefixers/app/data/services/appwrite/const/const.dart';
 
 class AuthProvider {
   AppWriteConnection appWriteConnection = AppWriteConnection();
@@ -13,6 +15,23 @@ class AuthProvider {
     } on AppwriteException catch (e) {
       Get.snackbar("Error", e.message.toString());
       return false;
+    }
+  }
+
+  Future<void> signup(
+    String email,
+    String password,
+    String name,
+  ) async {
+    try {
+      await appWriteConnection.account!.create(
+        userId: ID.unique(),
+        email: email,
+        password: password,
+        name: name,
+      );
+    } on AppwriteException catch (e) {
+      Get.snackbar("Error", e.message.toString());
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wefixers/app/ui/global_widgets/custombutton.dart';
 import '../../../controllers/signup_controller.dart';
 import '../../utils/colorconst.dart';
@@ -36,7 +37,7 @@ class SignupPage extends GetView<SignupController> {
                         size: 50,
                         color: Colors.white,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
                       Text("Connect to our Social Worker's Team",
@@ -60,23 +61,14 @@ class SignupPage extends GetView<SignupController> {
                   alignment: Alignment.center,
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         CustomTextField(
                           hinttext: "Your Name",
                           icon: Icons.person,
                           controller: controller.nameController.value,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        CustomTextField(
-                          hinttext: "Phone Number",
-                          icon: Icons.person,
-                          controller: controller.phoneNumber.value,
                         ),
                         const SizedBox(
                           height: 20,
@@ -98,133 +90,22 @@ class SignupPage extends GetView<SignupController> {
                         const SizedBox(
                           height: 20,
                         ),
-                        CustomButton(
-                            text: "Next",
-                            onPressed: () {
-                              showBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Colors.white,
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Text(
-                                            "Please Provide Some Additional Information",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          // Upload Image
-                                          Obx(
-                                            () => controller.image.value == null
-                                                ? GestureDetector(
-                                                    onTap: () {
-                                                      controller.profileImage();
-                                                    },
-                                                    child: const CircleAvatar(
-                                                      radius: 50,
-                                                      child: Icon(
-                                                          Icons.add_a_photo),
-                                                    ),
-                                                  )
-                                                : CircleAvatar(
-                                                    radius: 50,
-                                                    backgroundImage: FileImage(
-                                                        controller
-                                                            .image.value!),
-                                                  ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          CustomTextField(
-                                            hinttext: "City",
-                                            icon: Icons.person,
-                                            controller:
-                                                controller.cityController.value,
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          CustomTextField(
-                                            hinttext: "Address",
-                                            icon: Icons.person,
-                                            controller: controller
-                                                .addressController.value,
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          CustomTextField(
-                                            hinttext: "Education",
-                                            icon: Icons.person,
-                                            controller: controller
-                                                .educationController.value,
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          CustomTextField(
-                                            hinttext: "Father Name",
-                                            icon: Icons.person,
-                                            controller: controller
-                                                .fatherNameController.value,
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          CustomTextField(
-                                            hinttext: "CNIC",
-                                            icon: Icons.person,
-                                            controller:
-                                                controller.cnicController.value,
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          // Drop Down for Intrest Area
-                                          const Text(
-                                              "Please Select Intrest Area"),
-                                          Obx(() => DropdownButton<String>(
-                                                value: controller
-                                                    .selectedValue.value,
-                                                items: controller.dropdownItems
-                                                    .map((String value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList(),
-                                                onChanged: (newValue) {
-                                                  controller.onDropdownChanged(
-                                                      newValue!);
-                                                },
-                                              )),
-
-                                          CustomButton(
-                                            text: "Submit",
-                                            onPressed: () {
-                                              // controller.signup();
-                                            },
-                                            colorofbutton: Colors.white,
-                                            coloroftext: Colors.black,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  });
-                            }),
+                        Obx(
+                          () => controller.isSignUp.value
+                              ? Center(
+                                  child: Lottie.asset(
+                                  "assets/animation/loadingBar.json",
+                                  height: 100,
+                                  width: 100,
+                                ))
+                              : CustomButton(
+                                  onPressed: () {
+                                    controller.isSignUp.value = true;
+                                    controller.signUp();
+                                  },
+                                  text: "Sign Up",
+                                ),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -255,15 +136,22 @@ class CustomTextField extends StatelessWidget {
   final IconData icon;
   final bool obscuretext;
   final TextEditingController? controller;
-  // add validator
+  final String? Function(String?)? validator;
+  void Function(String)? onChanged;
+  final String? errorText;
+  final bool readOnly;
 
-  const CustomTextField({
-    super.key,
+  CustomTextField({
+    Key? key,
     this.hinttext = "",
     this.icon = Icons.person,
     this.obscuretext = false,
     this.controller,
-  });
+    this.validator,
+    this.onChanged,
+    this.errorText,
+    this.readOnly = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +167,11 @@ class CustomTextField extends StatelessWidget {
           ),
           hintText: hinttext,
           prefixIcon: Icon(icon),
+          errorText: errorText,
         ),
+        validator: validator,
+        onChanged: onChanged,
+        readOnly: readOnly,
       ),
     );
   }

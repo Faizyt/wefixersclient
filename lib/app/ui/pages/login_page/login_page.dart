@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wefixers/app/ui/pages/signup_page/signup_page.dart';
+import 'package:wefixers/app/ui/utils/colorconst.dart';
 import '../../../controllers/login_controller.dart';
 import '../../global_widgets/custombutton.dart';
 
@@ -14,42 +15,52 @@ class LoginPage extends GetView<LoginController> {
           builder: (BuildContext context, BoxConstraints constraints) {
         return Column(
           children: [
-            Container(
-              height: constraints.maxHeight / 2,
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: Colors.deepPurple,
-              ),
-              alignment: Alignment.center,
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Please Sign in here ",
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FlutterLogo()
-                ],
+            SingleChildScrollView(
+              child: Container(
+                height: constraints.maxHeight / 3.5,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: ColorConst.primaryColor,
+                ),
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Please Sign in here ",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: Colors.white,
+                      ),
+                      child: Image.asset(
+                        "assets/images/wefixerslogo.png",
+                        height: 100,
+                        width: 100,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Container(
-              height: constraints.maxHeight / 2,
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: Colors.white,
-              ),
-              alignment: Alignment.center,
+            SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   CustomTextField(
                     hinttext: "Email",
                     controller: controller.emailController,
@@ -72,6 +83,22 @@ class LoginPage extends GetView<LoginController> {
                     onPressed: () {
                       controller.login();
                     },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const SignupPage());
+                    },
+                    child: const Text(
+                      "Don't have an account? Sign up",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepPurple,
+                      ),
+                    ),
                   ),
                 ],
               ),

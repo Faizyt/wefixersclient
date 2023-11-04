@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class CustomSnackBar {
   static const _successColor = Colors.green;
@@ -34,6 +36,37 @@ class CustomSnackBar {
         ],
       ),
       backgroundColor: _failedColor.withOpacity(0.9),
+      duration: const Duration(seconds: 3),
+    );
+  }
+
+  // getx snack bar
+  static void getSuccessSnackBarX(String message) {
+    Get.snackbar(
+      "Success",
+      message,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: _successColor.withOpacity(0.9),
+      colorText: Colors.white,
+      // icon: const Icon(Icons.check_circle_outline, color: _successColor),
+      icon: Lottie.asset(
+        'assets/animation/success.json',
+        width: 30,
+        height: 30,
+        fit: BoxFit.cover,
+      ),
+      duration: const Duration(seconds: 3),
+    );
+  }
+
+  static void getFailedSnackBarX(String message) {
+    Get.snackbar(
+      "Failed 👎",
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: _failedColor.withOpacity(0.9),
+      colorText: Colors.white,
+      icon: const Icon(Icons.error_outline, color: _failedColor),
       duration: const Duration(seconds: 3),
     );
   }
