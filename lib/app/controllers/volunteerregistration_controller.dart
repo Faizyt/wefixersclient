@@ -1,8 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart' as userModel;
+// ignore: library_prefixes
+import 'package:appwrite/models.dart' as UserModel;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wefixers/app/data/provider/authprovider.dart';
@@ -29,7 +29,18 @@ class VolunteerregistrationController extends GetxController {
   var fatherNameError = RxnString();
   var cnicError = RxnString();
   var isLoading = false.obs;
-  userModel.User? user;
+  RxList<DropdownMenuItem<String>> intrests =
+      ['Education', 'Health', 'Food', 'Clothes', 'Shelter']
+          .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          })
+          .toList()
+          .obs;
+  RxString selectedIntrests = 'Education'.obs;
+  UserModel.User? user;
   @override
   void onInit() {
     super.onInit();
@@ -111,7 +122,8 @@ class VolunteerregistrationController extends GetxController {
         city.isEmpty ||
         education.isEmpty ||
         fatherName.isEmpty ||
-        cnic.isEmpty) {
+        cnic.isEmpty ||
+        image.value == null) {
       isLoading.value = true;
       await Future.delayed(const Duration(seconds: 3));
       isLoading.value = false;
@@ -121,7 +133,6 @@ class VolunteerregistrationController extends GetxController {
       await Future.delayed(const Duration(seconds: 3));
       try {
         RegistrationForms registrationForms = RegistrationForms();
-
         registrationForms
             .registerVolunteer(
           user!.$id,

@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 
 class GlobalServices {
@@ -11,6 +11,16 @@ class GlobalServices {
       return File(pickedFile.path);
     } else {
       return File('');
+    }
+  }
+}
+
+class AppLogger {
+  static log(String? message) {
+    if (!kReleaseMode) {
+      if (kDebugMode) {
+        print(message);
+      }
     }
   }
 }

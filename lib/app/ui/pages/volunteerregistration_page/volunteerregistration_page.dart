@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:wefixers/app/ui/global_widgets/custombutton.dart';
 import 'package:wefixers/app/ui/pages/signup_page/signup_page.dart';
 import '../../../controllers/volunteerregistration_controller.dart';
 import '../../utils/colorconst.dart';
@@ -37,11 +38,10 @@ class VolunteerregistrationPage
             ),
           ],
         ),
-        body: SafeArea(
-            child: SingleChildScrollView(
-          child: Center(
-            child: Obx(
-              () => Column(
+        body: Center(
+          child: Obx(
+            () => SingleChildScrollView(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 // mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,22 +156,52 @@ class VolunteerregistrationPage
                     icon: Icons.school,
                   ),
                   const SizedBox(
+                    height: 10,
+                  ),
+                  // add drop down widget
+                  Container(
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.black.withOpacity(0.5)),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        icon: const Icon(Icons.arrow_drop_down),
+                        hint: const Text('Select Interest'),
+                        value: controller.selectedIntrests.value,
+                        items: controller.intrests,
+                        onChanged: (newValue) {
+                          controller.selectedIntrests.value =
+                              newValue.toString();
+                        },
+                        // isExpanded: true,
+                        style: const TextStyle(color: Colors.black),
+                        dropdownColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
-
-                  Obx(() => controller.isLoading.value
-                      ? Center(
-                          child: Lottie.asset(
-                          "assets/animation/loadingBar.json",
-                          height: 100,
-                          width: 100,
-                        ))
-                      : ElevatedButton(
-                          onPressed: () {
-                            controller.submit();
-                          },
-                          child: const Text('Register As A Volunteer'),
-                        )),
+                  Obx(
+                    () => controller.isLoading.value
+                        ? Center(
+                            child: Lottie.asset(
+                            "assets/animation/loadingBar.json",
+                            height: 100,
+                            width: 100,
+                          ))
+                        : CustomButton(
+                            text: "Register",
+                            onPressed: () {
+                              controller.submit();
+                            },
+                          ),
+                  ),
                   const SizedBox(
                     height: 20,
                   )
@@ -179,6 +209,6 @@ class VolunteerregistrationPage
               ),
             ),
           ),
-        )));
+        ));
   }
 }

@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:wefixers/app/data/provider/authprovider.dart';
 import 'package:wefixers/app/data/services/appwrite/connection.dart';
 import 'package:wefixers/app/data/services/appwrite/const/const.dart';
+import 'package:wefixers/app/data/services/globalservices/globalservices.dart';
 import 'package:wefixers/app/ui/global_widgets/customsnackbar.dart';
+import '../data/services/sessioncontroller/usersessioncontroller.dart';
 
 class ProfileController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -14,7 +16,6 @@ class ProfileController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   var checkUser = Rxn<User>();
-
   @override
   void onInit() {
     super.onInit();
@@ -35,7 +36,8 @@ class ProfileController extends GetxController {
       collectionId: CollectionConst.voluntearRegistration,
       databaseId: DataBaseConst.voleantears,
     );
-    print(documents.documents);
+    // AppLogger.log(" Documents >>> ${documents.documents}");
+    Get.log(" Documents >>> ${documents.documents}");
     return documents;
   }
 

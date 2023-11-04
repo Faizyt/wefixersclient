@@ -1,9 +1,9 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
-import 'package:wefixers/app/data/services/appwrite/appwriteglobal.dart';
 import 'package:wefixers/app/data/services/appwrite/connection.dart';
-import 'package:wefixers/app/data/services/appwrite/const/const.dart';
+import 'package:wefixers/app/data/services/globalservices/globalservices.dart';
+import 'package:wefixers/app/data/services/sessioncontroller/usersessioncontroller.dart';
 
 class AuthProvider {
   AppWriteConnection appWriteConnection = AppWriteConnection();
@@ -11,6 +11,7 @@ class AuthProvider {
     try {
       await appWriteConnection.account!
           .createEmailSession(email: email, password: password);
+
       return true;
     } on AppwriteException catch (e) {
       Get.snackbar("Error", e.message.toString());
@@ -50,6 +51,7 @@ class AuthProvider {
   Future userDetails() async {
     try {
       User user = await appWriteConnection.account!.get();
+
       return user;
     } catch (e) {
       // Get.snackbar("Error", e.message.toString());
@@ -59,6 +61,7 @@ class AuthProvider {
   Future logout() async {
     try {
       await appWriteConnection.account!.deleteSessions();
+      UserSessionController().logout();
       Get.offAllNamed("/login");
     } catch (e) {
       Get.snackbar("Error", e.toString());

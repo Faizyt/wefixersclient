@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wefixers/app/ui/global_widgets/custombutton.dart';
 import '../../../controllers/signup_controller.dart';
+import '../../../routes/pages.dart';
 import '../../utils/colorconst.dart';
 
 class SignupPage extends GetView<SignupController> {
@@ -112,7 +113,7 @@ class SignupPage extends GetView<SignupController> {
                             const Text("Already have an account?"),
                             TextButton(
                               onPressed: () {
-                                Get.offAllNamed("/login");
+                                Get.toNamed(Pages.login);
                               },
                               child: const Text("Log in"),
                             )
@@ -137,11 +138,11 @@ class CustomTextField extends StatelessWidget {
   final bool obscuretext;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
-  void Function(String)? onChanged;
+  final void Function(String)? onChanged;
   final String? errorText;
   final bool readOnly;
 
-  CustomTextField({
+  const CustomTextField({
     Key? key,
     this.hinttext = "",
     this.icon = Icons.person,

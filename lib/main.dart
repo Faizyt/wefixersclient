@@ -13,15 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        onInit: () => AuthProvider().isLoggedIn(),
-        getPages: Pages.pages,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: ColorConst.primaryColor),
-          useMaterial3: true,
-        ),
-        initialRoute: Pages.welcome,
-      
-        );
+      // onInit: () => AuthProvider().isLoggedIn(),
+      getPages: Pages.pages,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: ColorConst.primaryColor),
+        useMaterial3: true,
+      ),
+      // initialRoute: Pages.welcome,
+      initialRoute: Pages.voluntearRegister,
+    );
   }
 }

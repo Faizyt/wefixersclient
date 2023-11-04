@@ -13,6 +13,7 @@ import 'package:wefixers/app/ui/pages/volunteerregistration_page/volunteerregist
 import '../ui/pages/welcome_page/welcome_page.dart';
 
 class Pages {
+  static const int duration = 500;
   static const String login = '/login';
   static const String signup = '/signup';
   static const String welcome = '/welcome';
@@ -25,26 +26,37 @@ class Pages {
         name: login,
         page: () => const LoginPage(),
         binding: LoginBinding(),
-        transition: Transition.zoom),
+        transition: Transition.upToDown,
+        transitionDuration: const Duration(milliseconds: duration)),
     GetPage(
         name: signup,
         page: () => const SignupPage(),
         binding: SignupBinding(),
-        transition: Transition.zoom),
+        transition: Transition.downToUp,
+        transitionDuration: const Duration(milliseconds: duration)),
     GetPage(
         name: welcome,
         page: () => const WelcomePage(),
         binding: SignupBinding(),
-        transition: Transition.upToDown),
+        transition: Transition.zoom,
+        transitionDuration: const Duration(milliseconds: duration)),
     GetPage(
-        name: mainscreen, page: () => const HomePage(), binding: HomeBinding()),
+        name: mainscreen,
+        page: () => const HomePage(),
+        binding: HomeBinding(),
+        transition: Transition.zoom,
+        transitionDuration: const Duration(milliseconds: duration)),
     GetPage(
         name: profile,
         page: () => const ProfilePage(),
-        binding: ProfileBinding()),
+        binding: ProfileBinding(),
+        transition: Transition.zoom,
+        transitionDuration: const Duration(milliseconds: duration)),
     GetPage(
         name: voluntearRegister,
         page: () => const VolunteerregistrationPage(),
-        binding: VolunteerregistrationBinding()),
+        binding: VolunteerregistrationBinding(),
+        transition: Transition.zoom,
+        transitionDuration: const Duration(milliseconds: duration)),
   ];
 }

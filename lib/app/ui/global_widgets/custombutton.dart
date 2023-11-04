@@ -18,7 +18,9 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+        clipBehavior: Clip.antiAlias,
         style: ElevatedButton.styleFrom(
+          elevation: 5,
           backgroundColor: colorofbutton ?? ColorConst.primaryColor,
           minimumSize: const Size(180, 50),
           shadowColor: Colors.black,

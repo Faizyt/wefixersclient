@@ -1,7 +1,10 @@
+import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wefixers/app/data/services/globalservices/globalservices.dart';
 import 'package:wefixers/app/ui/utils/colorconst.dart';
 import '../../../controllers/home_controller.dart';
+import '../../../data/services/sessioncontroller/usersessioncontroller.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -40,18 +43,20 @@ class HomePage extends GetView<HomeController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Obx(() => controller.checkUser.value != null
-                ? Text(controller.checkUser.value!.name.toString())
+            Obx(() => controller.userDetails.value != null
+                ? Text(controller.userDetails.value!.name.toString())
                 : const Text('Updating Data ...')),
             const SizedBox(
               height: 20,
             ),
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed('/voluntearRegister');
-              },
-              child: const Text('Resgister As A voluntear'),
-            ),
+            Obx(() => controller.isVoluntear.value
+                ? const SizedBox()
+                : ElevatedButton(
+                    onPressed: () {
+                      Get.toNamed('/voluntearRegister');
+                    },
+                    child: const Text('Resgister As A voluntear'),
+                  )),
             ElevatedButton(
               onPressed: () {
                 Get.toNamed('/profile');

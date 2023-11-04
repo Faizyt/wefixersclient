@@ -77,11 +77,8 @@ class WelcomePage extends GetView<WelcomeController> {
                     CustomButton(
                       text: "Sign up",
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignupPage(),
-                          ),
+                        Get.toNamed(
+                          Pages.signup,
                         );
                       },
                       colorofbutton: Colors.white,
